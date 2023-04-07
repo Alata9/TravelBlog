@@ -1,0 +1,20 @@
+{% extends 'layout/basic.html' %}
+
+{% load bootstrap4 %}
+
+{% block title %}Create a new profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Create a new profile</h2>
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form layout='horizontal' %}
+                {% buttons submit='Create a profile' %}{% endbuttons %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

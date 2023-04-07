@@ -1,0 +1,25 @@
+{% extends 'layout/basic.html' %}
+
+{% load bootstrap4 %}
+
+{% block title %}Sign in{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Sign in</h2>
+            {% if user.is_authenticated %}
+            <p>You have successfully sign in</p>
+            {% else %}
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form layout='horizontal' %}
+                <input type="hidden" name="next" value="{{ next }}"/>
+                {% buttons submit='Sing in' %}{% endbuttons %}
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'layout/basic.html' %}
+
+{% load bootstrap4 %}
+
+{% block title %}Delete a note{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>Delete a note: {{ bb.title }}?</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% buttons submit='Delete' %}{% endbuttons %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

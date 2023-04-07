@@ -1,0 +1,45 @@
+{% extends 'layout/basic.html' %}
+{% load thumbnail %}
+{% load static %}
+{% load bootstrap4 %}
+{% block title %}Main{% endblock %}
+{% block content %}
+
+
+<div class="container-fluid mb-2">
+    <div class="row">
+        <div class="col">&nbsp</div>
+            <form class="col-md-auto form-inline">
+                {% bootstrap_form form show_label=False %}
+                {% buttons submit='Search' %}{% endbuttons %}
+            </form>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>The last notes</h2>
+            {% if bbs %}
+            <ul class="list-unstyled">
+                {% for bb in bbs %}
+                <li class="media my-2 p-2 border">
+                    {% url 'main:detail' rubric_pk=rubric.pk pk=bb.pk as url %}
+                    <a href="{{ url }}{{ all }}">
+                        {% if bb.image %}
+                        <img class="mr-3" src="{% thumbnail bb.image 'default' %}">
+                        {% else %}
+                        <img class="mr-3" src="{% static 'main/2_32x32.png' %}">
+                        {% endif %}
+                    </a>
+                    <div class="media-body">
+                        <h3><a href="{{ url }}{{ all }}">{{ bb.title }}</a></h3>
+                        <p class="text-right font-italic">{{ bb.created_at }}</p>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% bootstrap_pagination page url=keyword %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

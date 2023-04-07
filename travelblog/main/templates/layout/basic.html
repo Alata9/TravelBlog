@@ -1,0 +1,73 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="wigth=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Main{% endblock %}</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+    {% bootstrap_javascript jquery='slim' %}
+
+    <!-- fancyBox CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+</head>
+<body class="container-fluid bg-light">
+    <header class="mb-4">
+        <h1 class="display-4 text-center">Personal traveling</h1>
+    </header>
+    <div class="row bg-warning shadow">
+        <ul class="col nav justify-content-end">
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-item dropdown-toggle"
+                   data-toggle="dropdown"
+                   href="#" role="button" aria-haspopup="true"
+                   aria-expanded="false">Personal Area: {{ user.username }}</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'main:profile' %}">My notes</a>
+                    <a class="dropdown-item" href="{% url 'main:profile_change' %}">Profile</a>
+                    <a class="dropdown-item" href="{% url 'main:password_change' %}">Сhange password</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'main:logout' %}">Logout</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'main:profile_delete' %}">Delete profile</a>
+                </div>
+            </li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'main:register' %}">Create profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'main:login' %}">Sign in</a> </li>
+            {% endif %}
+        </ul>
+    </div>
+        <div class="row">
+            <nav class="col-md-auto nav flex-column border shadow">
+                <a class="nav-link root" href="{% url 'main:index' %}">Main</a>
+
+                {% for rubric in rubrics %}
+                    {% ifchanged rubric.super_rubric.pk %}
+                    <span class="'nav-link root font-weight-bold">{{ rubric.super_rubric.name }}</span>
+                    {% endifchanged %}
+                        {% if rubric.super_rubric.pk %}
+                        <a class="nav-link" href="{% url 'main:by_rubric' pk=rubric.pk %}">{{ rubric.name }}</a>
+                        {% endif %}
+                {% endfor %}
+                <a class="nav-link root" href="{% url 'main:other' page='about' %}">About us</a>
+            </nav>
+            <section class="col border py-2 shadow">
+<!--                {% bootstrap_messages %}-->
+                {% block content %}
+                {% endblock %}
+            </section>
+        </div>
+        <footer class="mt-3">
+            <p class="text-right font-italic">&copy; Alata</p>
+        </footer>
+
+<!--    библиотеки fancybox-->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    </body>
+</html>

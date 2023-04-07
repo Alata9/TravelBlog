@@ -1,0 +1,33 @@
+header h1 {
+    background: url('2_256x256.png') left / auto 100% no-repeat;
+}
+
+.root {
+    font-size: larger;
+}
+
+img.main-image {
+    width: 400px;
+}
+
+img.additional-image {
+    width: 300px;
+}
+
+.thumb img {
+   -webkit-filter: grayscale(0);
+   filter: none;
+   border-radius: 5px;
+   background-color: #fff;
+   border: 1px solid #ddd;
+   padding: 5px;
+}
+
+.thumb img:hover {
+   -webkit-filter: grayscale(1);
+   filter: grayscale(1);
+}
+
+.thumb {
+   padding: 5px;
+}
